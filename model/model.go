@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm"
 )
 
-const DSN = "host=postgres user=postgres password=postgres dbname=postgres port=5432 sslmode=disable TimeZone=Asia/Tehran"
+const DSN = "host=postgres user=admin password=1234 dbname=bank port=5432 sslmode=disable TimeZone=Asia/Tehran"
 
 func InitialMigration() {
 	db, err := gorm.Open(postgres.Open(DSN), &gorm.Config{})
