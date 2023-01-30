@@ -35,8 +35,8 @@ type BusinessCustomer struct {
 
 	NationalId   int          `json:"nationalId" gorm:"primaryKey"`
 	BPId         int          `json:"bpid"`
-	Customer     Customer     `gorm:"foreignKey:NationalId;references:NationalId"`
-	BusinessPlan BusinessPlan `gorm:"foreignKey:BPId;references:ID"`
+	Customer     Customer     `json:"customer" gorm:"foreignKey:NationalId;references:NationalId"`
+	BusinessPlan BusinessPlan `json:"business_plan" gorm:"foreignKey:BPId;references:ID"`
 }
 
 type Report struct {
@@ -48,8 +48,8 @@ type Report struct {
 type Employee struct {
 	gorm.Model
 
-	Salary      float64 `gorm:"not null"`
-	EmpPassword string  `gorm:"not null"`
+	Salary      float64 `json:"salary" gorm:"not null"`
+	EmpPassword string  `json:"emp_password" gorm:"not null"`
 	FirstName   string  `json:"first_name" gorm:"not null"`
 	LastName    string  `json:"last_name" gorm:"not null"`
 	Sex         string  `json:"sex" gorm:"check:sex in ('male', 'female');not null"`
