@@ -70,6 +70,13 @@ type StorageHall struct {
 	StorageHallEmployee StorageHallEmployee `gorm:"foreignKey:SHEId;references:SHEId"`
 }
 
+type Account struct {
+	gorm.Model
+
+	Balance float64 `json:"balance" gorm:"default:0"`
+	CUId    int     `json:"cu-id"`
+}
+
 func InitialMigration() {
 
 	db, err := gorm.Open(postgres.Open(DSN), &gorm.Config{})
