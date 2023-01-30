@@ -73,8 +73,9 @@ type StorageHall struct {
 type Account struct {
 	gorm.Model
 
-	Balance float64 `json:"balance" gorm:"default:0"`
-	CUId    int     `json:"cu-id"`
+	Balance  float64  `json:"balance" gorm:"default:0"`
+	CUId     int      `json:"cu-id"`
+	Customer Customer `gorm:"foreignKey:CUId;references:NationalId"`
 }
 
 func InitialMigration() {
