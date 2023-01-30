@@ -43,4 +43,5 @@ func InitialMigration() {
 	if err != nil {
 		return
 	}
+
 }
