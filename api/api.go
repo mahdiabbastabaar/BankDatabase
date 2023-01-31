@@ -1,10 +1,26 @@
 package api
 
-import "github.com/gin-gonic/gin"
+import (
+	"BankDatabase/model"
+	"github.com/gin-gonic/gin"
+	"log"
+)
 
 var router *gin.Engine
 
 func showAllSafeBoxes(context *gin.Context) {
+	type SafeBoxId struct {
+		Id int `json:"id"`
+	}
+
+	var SBId SafeBoxId
+
+	err := context.ShouldBindJSON(&SBId)
+	if err != nil {
+		log.Println(err)
+	}
+
+	model.ShowAllSafeBoxes(SBId.Id)
 
 }
 
@@ -36,7 +52,7 @@ func StartServer() {
 
 	router = gin.Default()
 
-	router.GET("/showsafeboxes", showAllSafeBoxes)
+	router.POST("/showsafeboxes", showAllSafeBoxes)
 	router.GET("/currentcontracts", showAllContracts)
 	router.GET("/addsafebox", addSafeBox)
 	router.PATCH("/editsafebox", editSafeBox)

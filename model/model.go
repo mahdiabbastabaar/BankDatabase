@@ -79,12 +79,12 @@ type Account struct {
 }
 
 type SafeBox struct {
-	gorm.model
+	gorm.Model
 
 	MaximumValue float64     `json:"maximum_value" gorm:"not null"`
 	CUId         int         `json:"cu_id"`
-	SHId         int         `josn:"sh_id"`
-	priceClass   int         `json:"price_class" gorm:"not null"`
+	SHId         int         `json:"sh_id"`
+	PriceClass   int         `json:"price_class" gorm:"not null"`
 	Customer     Customer    `gorm:"foreignKey:CUId;references:NationalId"`
 	StorageHall  StorageHall `gorm:"foreignKey:SHId;references:ID"`
 }
@@ -92,58 +92,58 @@ type SafeBox struct {
 type Rent struct {
 	gorm.Model
 
-	REId     int      `json:"re_id" gorm:"unique;not null"`
+	//REId     int      `json:"re_id" gorm:"unique;not null"`
 	CUId     string   `json:"cu_id" gorm:"primaryKey"`
 	SBId     int      `json:"sb_id" gorm:"primaryKey"`
 	Customer Customer `gorm:"foreignKey:CUId;references:NationalId"`
-	SafeBox  SafeBox  `gorm:"foreignKey:SBId;references:ID`
+	SafeBox  SafeBox  `gorm:"foreignKey:SBId;references:ID"`
 }
 
 type Contract struct {
-	gorm Model
+	gorm.Model
 
-	baseAmount      float64   `json:"base_amount" gorm:"not null"`
-	fromTime        time.Time `json:"from_time" gorm:"not null"`
-	toTime	        time.Time `json:"to_time" gorm:"not null"`
-	duration        time.Time `json:"duration" gorm:"not null"`
-	discountPercent	int       `json:"discount_percent" gorm:"check:discountPercent <= 100;default:0"`
+	BaseAmount      float64   `json:"base_amount" gorm:"not null"`
+	FromTime        time.Time `json:"from_time" gorm:"not null"`
+	ToTime          time.Time `json:"to_time" gorm:"not null"`
+	Duration        time.Time `json:"duration" gorm:"not null"`
+	DiscountPercent int       `json:"discount_percent" gorm:"check:discount_percent <= 100;default:0"`
 	REId            int       `json:"re_id"`
-	Rent            Rent      `gorm:"foreignKey:REId;references:REId"`
+	Rent            Rent      `gorm:"foreignKey:REId;references:ID"`
 }
 
 type Services struct {
 	gorm.Model
 
 	COId        int      `json:"co_id" gorm:"primaryKey"`
-	serviceName string   `json:"service_name" gorm:"primaryKey;not null"`
-	serviceCost float64  `json:"service_cost" gorm:"not null"`
-	Contract    Contract `gorm:"foreignKey:COId;references:COId"`
+	ServiceName string   `json:"service_name" gorm:"primaryKey;not null"`
+	ServiceCost float64  `json:"service_cost" gorm:"not null"`
+	Contract    Contract `gorm:"foreignKey:COId;references:ID"`
 }
 
-type DamageReport {
+type DamageReport struct {
 	gorm.Model
 
 	RId                 int                 `json:"r_id"`
-	damageMeasure       float64             `json:"damage_measure" gorm:"not null"`
-	damageDescription   string              `json:"damage_description"`
+	DamageMeasure       float64             `json:"damage_measure" gorm:"not null"`
+	DamageDescription   string              `json:"damage_description"`
 	SHEId               int                 `json:"she_id"`
 	REId                int                 `json:"re_id"`
 	Report              Report              `gorm:"foreignKey:RId;references:ID"`
 	StorageHallEmployee StorageHallEmployee `gorm:"foreignKey:SHEId;references:SHEId"`
-	Rent                Rent                `gorm:"foreignKey:REId;references:REId"`
+	Rent                Rent                `gorm:"foreignKey:REId;references:ID"`
 }
 
 type EvacuationReport struct {
 	gorm.Model
 
 	RId                 int                 `json:"r_id"`
-	checkAmount         float64             `json:"check_amount" gorm:"not null"`
-	checkStatus         string              `json:"check_status" gorm:"check:check_status in ('Done', 'Not Done');not null"`
+	CheckAmount         float64             `json:"check_amount" gorm:"not null"`
+	CheckStatus         string              `json:"check_status" gorm:"check:check_status in ('Done', 'Not Done');not null"`
 	SHEId               int                 `json:"she_id"`
 	REId                int                 `json:"re_id"`
 	Report              Report              `gorm:"foreignKey:RId;references:ID"`
 	StorageHallEmployee StorageHallEmployee `gorm:"foreignKey:SHEId;references:SHEId"`
-	Rent                Rent                `gorm:"foreignKey:REId;references:REId"`
+	Rent                Rent                `gorm:"foreignKey:REId;references:ID"`
 }
 
 func InitialMigration() {
