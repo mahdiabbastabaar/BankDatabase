@@ -1,20 +1,15 @@
 package main
 
 import (
+	"BankDatabase/api"
 	"BankDatabase/model"
 	"fmt"
-	"log"
-	"net/http"
+	"time"
 )
 
 func main() {
 	fmt.Println("Starting server...")
-
+	time.Sleep(3 * time.Second)
 	model.InitialMigration()
-	http.HandleFunc("/", serve)
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
-
-func serve(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("hello Mr.Amini!"))
+	api.StartServer()
 }
